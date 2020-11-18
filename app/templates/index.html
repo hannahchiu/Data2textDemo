@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+<!-- {% block css %}{% endblock %} -->
+
+{% block content %}
+
+
+<div class="clearfix">
+    <section id="intentions">
+        {% for cmd_en, cmd_zh in cmd_list %}
+            <div class="intention_block {% if cmd == cmd_en %}red{% endif %}">
+                <h4>
+                    <a href="./?pattern={{ cmd_en }}">
+                        {{ cmd_en }} {{ cmd_zh }}
+                    </a>
+                </h4>
+            </div>
+        {% endfor %}
+    </section>
+</div>
+
+{% endblock %}
