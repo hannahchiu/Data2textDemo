@@ -1,3 +1,3 @@
-FLASK_APP=intention.py
+FLASK_APP=data2text.py
 FLASK_DEBUG=1
 TEMPLATES_AUTO_RELOAD=true

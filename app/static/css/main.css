@@ -1,6 +1,3 @@
-.inputbox{
-    font-size: 20px;
-}
 .inputtext{
     height: 40px;
     width: 500px;
@@ -13,3 +10,40 @@
     font-size: auto;
 }
 
+.inputtext{
+    height: 40px;
+    width: 500px;
+    margin: 10px 0 0 0;
+    font-size: 15px;
+}
+
+.select {
+    width: 250px;
+    height: 100px;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid gray;
+    display: block;
+    background-color: #b0d8eb;
+}
+
+.tablearea {
+    width: 250px;
+    height: 100px;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid gray;
+    display: flex;
+    background-color: #b0d8eb;
+}
+
+.textarea {
+	float: left;
+    width: 250px;
+    height: 100px;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid gray;
+    display: inline;
+    background-color: #b0d8eb;
+}
