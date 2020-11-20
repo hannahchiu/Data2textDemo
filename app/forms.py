@@ -3,7 +3,10 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Selec
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
-    inputtext = StringField('請輸入指令...', validators=[DataRequired()])
+    # num_forms = 10
+    # attributes = [StringField('') for _ in range(num_forms)]
+    inputtext = StringField('fff', validators=[DataRequired()])
+    # values = [StringField('', validators=[DataRequired()]) for _ in range(num_forms)]
     # password = PasswordField('Password', validators=[DataRequired()])
     # remember_me = BooleanField('Remember Me')
     submit = SubmitField('Submit')

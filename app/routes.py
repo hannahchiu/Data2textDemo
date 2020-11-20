@@ -19,6 +19,7 @@ NAMES = ['Dell Laptop Latitude E6440',
 generator = Generator(checkpoint='src/checkpoint.pth')
 print('finish loading generator')
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = LoginForm()
@@ -26,22 +27,37 @@ def index():
     table = {}
     description = ""
     print('damn')
+    # if form.validate_on_submit():
+    #     print('fff')
+    #     return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
+
     try:
         print('pro', product)
         num = int(product)
         table = TABLE[num-1]
         name = NAMES[num-1]
-
+        global_table = table
     except:
-        print('ggg')
-        return render_template('base.html', form=form, table=table, description=description, product_list=NAMES)
+        if product == 'submit':
+            print('ggg')
+            ### handle table here ###
+            
+            # print(request.form)
+            num_form = (len(request.form) - 1)//2
+            table = {}
+            form_table = request.form.to_dict(flat=False)
+            # print(form_table)
+            for i in range(num_form):
+                # print(form_table['attr-%d'%i], form_table['value-%d'%i])
+                if not request.form['attr-%d'%i]:
+                    continue
+                table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
 
-    print('table')
-    description = generator.test(table) 
-    table = list(table.items())
-    if form.validate_on_submit():
-        print('fff')
-        print(description)
-               
-        return render_template('base.html', form=form, table=table, description=description, product_list=NAMES)
-    return render_template('base.html', form=form, table=table, description=description, product_list=NAMES)
+            if table:
+                description = generator.test(table) 
+                print(description)
+        tuples = list(table.items())
+        return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
+
+    tuples = list(table.items())
+    return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)

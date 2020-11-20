@@ -21,20 +21,7 @@
         <h1> &nbsp &nbsp Data2Text Demo </h1>
         {% endif %}
         
-        <!-- <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <p>
-                <div class="inputbox">
-                {{ form.inputtext.label }}<br>
-                {{ form.inputtext(class_="inputtext") }}
-                {% for error in form.inputtext.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-                </div>
-            </p>
 
-            <p>{{ form.submit(class_="submit") }}</p>
-        </form> -->
         <hr>
 
         <div class="container-fluid content px-lg-5 py-3">
@@ -51,7 +38,7 @@
                       <div class="btn-group mr-2" role="group" aria-label="First group">
                         <div class="clearfix">
                         {% for product in product_list %}
-                          <a role="button" href="./?product={{ loop.index }}" class="btn btn-secondary mx-1 mt-1">{{ product }}</a> 
+                          <a role="button" href="./?product={{ loop.index }}" class="btn btn-secondary mx-1 my-1">{{ product }}</a> 
                         {% endfor %}
                         </div>
                       </div>
@@ -65,11 +52,12 @@
                       Attribute
                 </div>
                 <div class="card-body attribute-body">
-                  <table class="table table-hover"><tbody>
+                  <!-- <table class="table table-hover"><tbody>
                     {% for k, v in table %}
                     <tr> <th> {{ k }} </th> <td> {{ v }} </td> </tr> 
                     {% endfor %}
-                  </tbody></table>
+                  </tbody></table> -->
+                  {% block table_content %}{% endblock %}
                 </div>
 
               </div>
