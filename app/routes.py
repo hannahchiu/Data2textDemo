@@ -43,7 +43,7 @@ def index():
             ### handle table here ###
             
             # print(request.form)
-            num_form = (len(request.form) - 1)//2
+            num_form = (len(request.form))//2
             table = {}
             form_table = request.form.to_dict(flat=False)
             # print(form_table)
@@ -54,6 +54,7 @@ def index():
                 table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
 
             if table:
+                print('table', table)
                 description = generator.test(table) 
                 print(description)
         tuples = list(table.items())
