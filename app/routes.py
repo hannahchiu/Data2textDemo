@@ -16,7 +16,7 @@ NAMES = ['Dell Laptop Latitude E6440',
          'Asus Z91', 
          'Lenovo T530'
          ]
-# generator = Generator(checkpoint='src/checkpoint.pth')
+generator = Generator(checkpoint='src/checkpoint.pth')
 print('finish loading generator')
 
 
@@ -53,9 +53,9 @@ def index():
                     continue
                 table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
 
-            # if table:
-            #     description = generator.test(table) 
-            #     print(description)
+            if table:
+                description = generator.test(table) 
+                print(description)
         tuples = list(table.items())
         return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
 
