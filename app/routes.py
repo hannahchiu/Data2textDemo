@@ -1,7 +1,7 @@
 from app import app
 from flask import render_template, flash, request, redirect, url_for
 from app.forms import LoginForm
-from src.test import Generator
+from src.test import Generator, all_slots
 # from app.control import ctrl
 import json
 
@@ -16,7 +16,7 @@ NAMES = ['Dell Laptop Latitude E6440',
          'Asus Z91', 
          'Lenovo T530'
          ]
-generator = Generator(checkpoint='src/checkpoint.pth')
+# generator = Generator(checkpoint='src/checkpoint.pth')
 print('finish loading generator')
 
 
@@ -53,11 +53,17 @@ def index():
                     continue
                 table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
 
-            if table:
-                description = generator.test(table) 
-                print(description)
+            # if table:
+            #     description = generator.test(table) 
+            #     print(description)
         tuples = list(table.items())
         return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
 
     tuples = list(table.items())
     return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
+
+@app.route('/attr', methods=['GET', 'POST'])
+def attr():
+    return render_template('attr.html', slots=all_slots)
+
+
