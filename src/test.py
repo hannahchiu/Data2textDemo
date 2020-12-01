@@ -176,6 +176,7 @@ class GeneratorZH(object):
             t5_model = MT5Model.from_pretrained('google/mt5-base')
             self.model = GenerationModel(t5_model)
         self.load_checkpoint()
+        self.model = self.model.cuda()
 
     def _generate_one_step(self, input_ids):
         if self._condition_generation:
@@ -209,11 +210,12 @@ class GeneratorZH(object):
 
         input_str = ''.join(['<'+k+'> '+v+' </'+k+'>\n' for k, v in table.items()])
         input_ids = self.tokenize(input_str).squeeze(0)
+        input_ids = input_ids.cuda()
         print('input_ids', input_ids.size())
         outputs = self._generate_one_step(input_ids.unsqueeze(0))
         print('outputs', outputs.size())
 
-        l = self.tokenizer.decode(outputs.squeeze(0).long().tolist())
+        l = self.tokenizer.decode(outputs.squeeze(0).long().detach().cpu().tolist())
         l = l.strip('\n').strip().replace('<pad>', '').replace('</s>', '').strip().replace(' ', '\n')
         l = converter.convert(l)
         return l
