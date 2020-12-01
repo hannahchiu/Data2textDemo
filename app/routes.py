@@ -93,6 +93,7 @@ def index():
     table = {}
     description = ""
     print('damn')
+    ds = []
     # if form.validate_on_submit():
     #     print('fff')
     #     return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
@@ -124,11 +125,13 @@ def index():
                 description = generator_zh.test(table) 
                 # description = "sleghsefs"
                 print(description)
+                ds = description.split('\n')
+                description = ""
         tuples = list(table.items())
-        return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES_ZH)
+        return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES_ZH, ds=ds)
 
     tuples = list(table.items())
-    return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES_ZH)
+    return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES_ZH, ds=ds)
 
 @app.route('/attr', methods=['GET', 'POST'])
 def attr():

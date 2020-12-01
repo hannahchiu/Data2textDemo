@@ -73,6 +73,11 @@
                 </div>
                 <div class="card-body">
                     <p> {{ description }} </p>
+                    <ul>
+                      {% for l in ds %}
+                      <li>{{ l }}</li>
+                      {% endfor %}
+                    </ul>
                     <!-- <h1>{{ name }}</h1> -->
                 </div>
               
