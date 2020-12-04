@@ -13,7 +13,8 @@ from transformers import T5Model, T5ForConditionalGeneration, T5Tokenizer
 from transformers import MT5Model, MT5ForConditionalGeneration
 import logging
 import opencc
-
+os.environ["CUDA_VISIBLE_DEVICES"]="3"
+print(torch.cuda.current_device())
 converter = opencc.OpenCC('s2tw.json')
 
 all_slots = [
