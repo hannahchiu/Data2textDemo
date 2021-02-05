@@ -2,7 +2,10 @@ import torch
 import torch.nn as nn
 
 class GenerationModel(torch.nn.Module):
-    """docstring for GenerationModel"""
+    """
+        docstring for GenerationModel
+        same model as used in /share/home/timchen0618/Data2Text/pure_t5
+    """
     def __init__(self, T5, temp=None):
         super(GenerationModel, self).__init__()
         self.t5 = T5

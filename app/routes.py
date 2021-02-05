@@ -2,11 +2,11 @@ from app import app
 from flask import render_template, flash, request, redirect, url_for
 from app.forms import LoginForm
 from src.test import Generator, all_slots, GeneratorZH, all_slots_zh
-# from app.control import ctrl
 import json
 
+# some selected example table for user to click on 
 TABLE = json.load(open('data/new_table.json'))
-
+# names displayed on the website for the examples
 NAMES = ['Dell Laptop Latitude E6440', 
          'Dell Vostro 3458', 
          'Apple iMac 27', 
@@ -16,11 +16,10 @@ NAMES = ['Dell Laptop Latitude E6440',
          'Asus Z91', 
          'Lenovo T530'
          ]
-# generator = Generator(checkpoint='src/checkpoint.pth')
-# print('finish loading generator')
 
+# some selected example table (chinese) for user to click on
 TABLE_ZH = json.load(open('data/zh_data.json'))
-
+# names displayed on the website for the examples
 NAMES_ZH = ['【STEIFF】熊頭童裝 長袖T恤',
 '【Footer】輕壓力單色足弓襪',
 '【ILEY 伊蕾】100%縲縈碎花長版洋裝',
@@ -31,108 +30,57 @@ NAMES_ZH = ['【STEIFF】熊頭童裝 長袖T恤',
 '【Jessica Red】氣質素色圓領綁帶造型上衣',
 '【SNOOPY 史努比】史努比穿毛衣寬版大學T'
 ]
-"""
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    form = LoginForm()
-    product = request.args.get('product')
-    table = {}
-    description = ""
-    print('damn')
-    # if form.validate_on_submit():
-    #     print('fff')
-    #     return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
 
-    try:
-        print('pro', product)
-        num = int(product)
-        table = TABLE[num-1]
-        name = NAMES[num-1]
-        global_table = table
-    except:
-        if product == 'submit':
-            print('ggg')
-            ### handle table here ###
-            
-            # print(request.form)
-            num_form = (len(request.form))//2
-            table = {}
-            form_table = request.form.to_dict(flat=False)
-            # print(form_table)
-            for i in range(num_form):
-                # print(form_table['attr-%d'%i], form_table['value-%d'%i])
-                if not request.form['attr-%d'%i]:
-                    continue
-                table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
-
-            if table:
-                print('table', table)
-                # description = generator.test(table) 
-                description = "sleghsefs"
-                print(description)
-        tuples = list(table.items())
-        return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
-
-    tuples = list(table.items())
-    return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
-
-@app.route('/attr', methods=['GET', 'POST'])
-def attr():
-    return render_template('attr.html', slots=all_slots)
-
-"""
-
-
+# init generator for chinese
 generator_zh = GeneratorZH(checkpoint='src/checkpoint.zh.pth')
 print('finish loading generator')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = LoginForm()
-    product = request.args.get('product')
+    product = request.args.get('product')  # the id of selected example product
+
     table = {}
     description = ""
-    print('damn')
     ds = []
-    # if form.validate_on_submit():
-    #     print('fff')
-    #     return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES)
 
     try:
         print('pro', product)
-        num = int(product)
+        num = int(product)                 # the id of selected example product -> if this line works, means it is int
+                                           # means user have clicked on some example -> need to display the attr table
+        # get the table and example name
         table = TABLE_ZH[num-1]
         name = NAMES_ZH[num-1]
         global_table = table
     except:
         if product == 'submit':
-            print('ggg')
             ### handle table here ###
-            
-            # print(request.form)
             num_form = (len(request.form))//2
             table = {}
-            form_table = request.form.to_dict(flat=False)
-            # print(form_table)
-            for i in range(num_form):
-                # print(form_table['attr-%d'%i], form_table['value-%d'%i])
+            form_table = request.form.to_dict(flat=False)  # convert table into a dictionary
+
+            # get the input table through a form (displayed as a modifiable table)
+            # pass to python code using request.form
+            for i in range(num_form):   # fill the attribute and value to table
                 if not request.form['attr-%d'%i]:
                     continue
                 table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
 
             if table:
-                print('table', table)
-                description = generator_zh.test(table) 
-                # description = "sleghsefs"
-                print(description)
-                ds = description.split('\n')
+                ######################################
+                # generate a description based on the table
+                ######################################
+                description = generator_zh.test(table)
+
+                ds = description.split('\n') # description per line (momo format -> bullet points)
                 description = ""
-        tuples = list(table.items())
+        tuples = list(table.items())  # turn table into tuples of 2 elements
         return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES_ZH, ds=ds)
 
     tuples = list(table.items())
     return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES_ZH, ds=ds)
 
+# display all possible attributes
 @app.route('/attr', methods=['GET', 'POST'])
 def attr():
     return render_template('attr.html', slots=all_slots_zh)

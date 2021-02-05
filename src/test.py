@@ -12,11 +12,14 @@ from torch.utils.data import DataLoader
 from transformers import T5Model, T5ForConditionalGeneration, T5Tokenizer
 from transformers import MT5Model, MT5ForConditionalGeneration
 import logging
-import opencc
 os.environ["CUDA_VISIBLE_DEVICES"]="3"
 print(torch.cuda.current_device())
+
+# translate simple to traditional chinese
+import opencc
 converter = opencc.OpenCC('s2tw.json')
 
+# all possible slots
 all_slots = [
 'Brand Name', 
 'Batteries Included?', 
@@ -93,13 +96,14 @@ class Generator(object):
         self.word2id = self.tokenizer.get_vocab()
         self.bos = self.word2id[self.tokenizer.pad_token]
 
+        # maximun length
         self.src_max_len = 512
         self.tgt_max_len = 200
         print('preparing model...')
         # prepare model
         self._saved_checkpoint = checkpoint
         self.prepare_model(condition_generation=condition_generation)
-        self._condition_generation = condition_generation
+        self._condition_generation = condition_generation  # whether use T5ForConditionalGeneration or MT5ForConditionalGeneration
         
 
     def prepare_model(self, condition_generation=False):
@@ -140,13 +144,12 @@ class Generator(object):
 
         self.model.eval()
 
-        input_str = ''.join(['<'+k+'> '+v+' </'+k+'>\n' for k, v in table.items()])
-        input_ids = self.tokenize(input_str).squeeze(0)
-        print('input_ids', input_ids.size())
-        outputs = self._generate_one_step(input_ids.unsqueeze(0))
-        print('outputs', outputs.size())
+        input_str = ''.join(['<'+k+'> '+v+' </'+k+'>\n' for k, v in table.items()])  # concatenate table into a string
+        input_ids = self.tokenize(input_str).squeeze(0)                              # tokenization
 
-        l = self.tokenizer.decode(outputs.squeeze(0).long().tolist())
+        outputs = self._generate_one_step(input_ids.unsqueeze(0))
+
+        l = self.tokenizer.decode(outputs.squeeze(0).long().tolist())                # decode ids into token
         return l
 
 all_slots_zh = ['效能', '荷重', '功效', '對象與族群', '圖案', '顏色', '成份', '品牌定位', '材質', '認證', '容量', '香味', 'description', '品牌名稱', '功能', '組裝方式', '形狀', '罩杯', '適用於', '類型', '款式', '重量', '包裝組合', '版型', '尺寸', '產地', '領圍', '時間']
@@ -209,16 +212,15 @@ class GeneratorZH(object):
 
         self.model.eval()
 
-        input_str = ''.join(['<'+k+'> '+v+' </'+k+'>\n' for k, v in table.items()])
-        input_ids = self.tokenize(input_str).squeeze(0)
-        input_ids = input_ids.cuda()
-        print('input_ids', input_ids.size())
-        outputs = self._generate_one_step(input_ids.unsqueeze(0))
-        print('outputs', outputs.size())
+        input_str = ''.join(['<'+k+'> '+v+' </'+k+'>\n' for k, v in table.items()])   # concatenate table into a string
+        input_ids = self.tokenize(input_str).squeeze(0)                               # tokenization
+        input_ids = input_ids.cuda()                                                  # put things onto gpu
 
-        l = self.tokenizer.decode(outputs.squeeze(0).long().detach().cpu().tolist())
-        l = l.strip('\n').strip().replace('<pad>', '').replace('</s>', '').strip().replace(' ', '\n')
-        l = converter.convert(l)
+        outputs = self._generate_one_step(input_ids.unsqueeze(0))                     
+
+        l = self.tokenizer.decode(outputs.squeeze(0).long().detach().cpu().tolist())  # decode ids to token
+        l = l.strip('\n').strip().replace('<pad>', '').replace('</s>', '').strip().replace(' ', '\n') # postprocessing
+        l = converter.convert(l)                                                                      # convert simple to traditional chinese
         return l
 
 
