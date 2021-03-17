@@ -73,7 +73,7 @@ def index():
                 description = generator_zh.test(table)
 
                 ds = description.split('\n') # description per line (momo format -> bullet points)
-                description = ""
+                # description = ""
         tuples = list(table.items())  # turn table into tuples of 2 elements
         return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES_ZH, ds=ds)
 
