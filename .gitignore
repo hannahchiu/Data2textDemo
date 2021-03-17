@@ -2,3 +2,4 @@ src/checkpoint.pth
 src/checkpoint.zh.pth
 package-lock.json
 node_modules/
+.idea/
