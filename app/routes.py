@@ -100,4 +100,7 @@ def attr():
     return render_template('attr.html', slots=all_slots_zh)
 
 
-
+@app.route("/get")
+def get_bot_response():
+    userText = request.args.get('msg')
+    return "使用者輸入" + userText
