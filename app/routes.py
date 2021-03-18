@@ -67,7 +67,7 @@ def index():
                 table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
 
             if table:
-                if request.values["des"] != "" and request.values["action"] == 'submit_des':
+                if "des" in request.values and request.values["action"] == 'submit_des':
                     description = request.values['des']
                 else:
                 ######################################
