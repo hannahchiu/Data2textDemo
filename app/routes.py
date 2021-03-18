@@ -67,7 +67,7 @@ def index():
                 table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
 
             if table:
-                if "des" in request.values and request.values["action"] == 'submit_des':
+                if request.values["des"] != "" and request.values["action"] == 'submit_des':
                     description = request.values['des']
                 else:
                 ######################################
@@ -103,4 +103,5 @@ def attr():
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
-    return "使用者輸入" + userText
+    desText = request.args.get('des')
+    return "使用者輸入:" + userText + "; description:" + desText
