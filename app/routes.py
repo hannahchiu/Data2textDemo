@@ -67,18 +67,33 @@ def index():
                 table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
 
             if table:
+                print(request.values)
+                if request.values["des"] != "":
+                    description = request.values['des']
+                else:
                 ######################################
                 # generate a description based on the table
                 ######################################
-                description = generator_zh.test(table)
+                    description = generator_zh.test(table)
 
                 ds = description.split('\n') # description per line (momo format -> bullet points)
                 # description = ""
+        # elif product == "submit2":
+        #     description = request.values['des']
         tuples = list(table.items())  # turn table into tuples of 2 elements
-        return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES_ZH, ds=ds)
+
+        # if product == "submit":
+        #     print(table)
+        #     print(description)
+        #     return render_template('index2.html', form=form, table=tuples, description=description, product_list=NAMES_ZH, ds=ds)
+        # else:
+
+        print(description)
+        return render_template('index2.html', form=form, table=tuples, description=description,
+                               product_list=NAMES_ZH, ds=ds)
 
     tuples = list(table.items())
-    return render_template('index.html', form=form, table=tuples, description=description, product_list=NAMES_ZH, ds=ds)
+    return render_template('index2.html', form=form, table=tuples, description=description, product_list=NAMES_ZH, ds=ds)
 
 # display all possible attributes
 @app.route('/attr', methods=['GET', 'POST'])

@@ -42,28 +42,36 @@
                     </div>
               </div>
 
-              <!-- display attribute table -->
-              <div class="card attribute">
-                <div class="card-header tableheader" style="background-color: #b0d8eb">
-                      Attribute  (<a onclick="window.open('.{{ url_for('attr') }}', 'newwindow', 'width=700, height=600')" class="btn btn-link"> all attributes </a>)
-                </div>
-                <div class="card-body attribute-body">
+<!--               display attribute table-->
+<!--              <div class="card attribute">-->
+<!--                <div class="card-header tableheader" style="background-color: #b0d8eb">-->
+<!--                      Attribute  (<a onclick="window.open('.{{ url_for('attr') }}', 'newwindow', 'width=700, height=600')" class="btn btn-link"> all attributes </a>)-->
+<!--                </div>-->
+<!--                <div class="card-body attribute-body">-->
 
                   {% block table_content %}{% endblock %}
-                </div>
+<!--                </div>-->
 
-              </div>
+<!--              </div>-->
 
 
 
             <!-- display generated description -->
 <!--            <div class="col">-->
-              <div class="card attribute">
-                <div class="card-header">
-                  Description
-                </div>
-                <textarea class="card-body">{{ description }}</textarea>
-              </div>
+<!--              <div class="card attribute">-->
+<!--                <div class="card-header">-->
+<!--                  Description-->
+<!--                </div>-->
+<!--                <form action="." method="post">-->
+<!--                    <textarea class="card-body" rows="5">{{ description }}</textarea>-->
+<!--                    <button type="submit" class="btn btn-primary mt-3 mb-1">Submit</button>-->
+
+<!--                </form>-->
+<!--                <div class="card-body">-->
+<!--                     {% block des_content %}{% endblock %}-->
+<!--                    <p> {{ description }} </p>-->
+<!--                </div>-->
+<!--              </div>-->
 
             </div>
 

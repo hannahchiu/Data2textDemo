@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block table_content %}
+<form action="./?product=submit" method="post">
+    <div class="card attribute">
+        <div class="card-header tableheader" style="background-color: #b0d8eb">
+            Attribute (<a onclick="window.open('.{{ url_for('attr') }}', 'newwindow', 'width=700, height=600')"
+                          class="btn btn-link"> all attributes </a>)
+        </div>
+        <div class="card-body attribute-body">
+
+            {% for k, v in table %}
+            <div class="row no-gutters">
+                <div class="col">
+                    <input type="text" class="form-control font-weight-bold rounded-0" value="{{ k }}"
+                           name="attr-{{ loop.index0 }}">  <!-- attribute -->
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control rounded-0" value="{{ v }}" name="value-{{ loop.index0 }}">
+                    <!-- value -->
+                </div>
+            </div>
+            {% endfor %}
+            {% if table %}
+            <button type="submit" class="btn btn-primary mt-3 mb-1">Submit</button>
+            {% endif %}
+        </div>
+
+    </div>
+    <div class="card attribute">
+        <div class="card-header">
+            Description
+        </div>
+        <textarea name="des" class="card-body" rows="5">{{ description }}</textarea>
+        {% if description %}
+        <div>
+            <button type="submit" class="btn btn-primary mt-3 mb-1">Submit</button>
+        </div>
+        {% endif %}
+    </div>
+</form>
+{% endblock %}
+
+<!--{% block des_content %}-->
+<!--<form action="./?product=submit2" method="post">-->
+<!--    <textarea  name="des" class="card-body" rows="5">{{ description }}</textarea>-->
+<!--    {% if description %}-->
+<!--    <div>-->
+<!--    <button type="submit" class="btn btn-primary mt-3 mb-1">Submit</button>-->
+<!--    </div>-->
+<!--    {% endif %}-->
+<!--</form>-->
+<!--{% endblock %}-->
