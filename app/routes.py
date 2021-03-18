@@ -55,7 +55,7 @@ def index():
     except:
         if product == 'submit':
             ### handle table here ###
-            num_form = (len(request.form))//2
+            num_form = (len(request.form)-1)//2
             table = {}
             form_table = request.form.to_dict(flat=False)  # convert table into a dictionary
 
@@ -67,8 +67,7 @@ def index():
                 table[request.form['attr-%d'%i]] = request.form['value-%d'%i]
 
             if table:
-                print(request.values)
-                if request.values["des"] != "":
+                if request.values["des"] != "" and request.values["action"] == 'submit_des':
                     description = request.values['des']
                 else:
                 ######################################

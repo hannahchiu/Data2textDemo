@@ -22,7 +22,7 @@
             </div>
             {% endfor %}
             {% if table %}
-            <button type="submit" class="btn btn-primary mt-3 mb-1">Submit</button>
+            <button type="submit" class="btn btn-primary mt-3 mb-1" name="action" value="submit_table">送出</button>
             {% endif %}
         </div>
 
@@ -31,12 +31,22 @@
         <div class="card-header">
             Description
         </div>
-        <textarea name="des" class="card-body" rows="5">{{ description }}</textarea>
-        {% if description %}
-        <div>
-            <button type="submit" class="btn btn-primary mt-3 mb-1">Submit</button>
+        <div class="card-body attribute-body">
+            <textarea name="des" class="form-control" rows="5">{{ description }}</textarea>
+            {% if description %}
+            <div>
+                <button type="submit" class="btn btn-primary mt-3 mb-1" name="action" value="submit_des">修改送出</button>
+            </div>
+            <div class="card-body">
+                <!-- <p> {{ description }} </p> -->
+                <ul>
+                    {% for l in ds %}
+                    <li>{{ l }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 </form>
 {% endblock %}
