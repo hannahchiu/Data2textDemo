@@ -3,6 +3,8 @@ from flask import render_template, flash, request, redirect, url_for
 from app.forms import LoginForm
 from src.test import Generator, all_slots, GeneratorZH, all_slots_zh
 import json
+from app.control import Controller
+ctrl = Controller('app/pattern/intent_pattern.json', 'app/pattern/entity_info.json', 'app/pattern/styleme_new.tsv', 'app/pattern/effect2ids.json', 'app/pattern/response.json')
 
 # some selected example table for user to click on 
 TABLE = json.load(open('data/new_table.json'))
@@ -104,4 +106,7 @@ def attr():
 def get_bot_response():
     userText = request.args.get('msg')
     desText = request.args.get('des')
+    intent_string, pattern_string, get_item, item_list, resp_string = ctrl.control(userText)
+    print(intent_string)
+    print(resp_string)
     return "使用者輸入:" + userText + "; description:" + desText
