@@ -475,7 +475,7 @@ textarea {
           $("#textInput").val("");
           $("#chatbox").append(userHtml);
 
-          $.get("/get", { msg: rawText, des: desText }).done(function(data) {
+          $.get("./get", { msg: rawText, des: desText }).done(function(data) {
             var botHtml = '<div class="media media-chat"><img class="avatar" src="https://img.icons8.com/doodle/48/000000/girl.png" alt="..."><div class="media-body"><p>' + data + "</p></div></div>";
             $("#chatbox").append(botHtml);
 

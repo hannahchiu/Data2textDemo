@@ -109,4 +109,4 @@ def get_bot_response():
     intent_string, pattern_string, get_item, item_list, resp_string = ctrl.control(userText)
     print(intent_string)
     print(resp_string)
-    return "使用者輸入:" + userText + "; description:" + desText
+    return "使用者輸入:" + userText + "; response:" + resp_string + "; description:" + desText
